@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import br.com.felipeacerbi.jokeslib.Joker;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -46,6 +48,9 @@ public class MainActivityFragment extends Fragment {
     }
 
     public void tellJoke() {
-        Toast.makeText(getActivity(), "derp", Toast.LENGTH_SHORT).show();
+        Joker joker = new Joker();
+        String joke = joker.getJoke();
+
+        Toast.makeText(getActivity(), joke, Toast.LENGTH_SHORT).show();
     }
 }

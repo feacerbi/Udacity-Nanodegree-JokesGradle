@@ -31,4 +31,6 @@ dependencies {
 
     // Play Services
     implementation 'com.google.android.gms:play-services-ads:11.6.0'
+
+    implementation project(':jokeslib')
 }
