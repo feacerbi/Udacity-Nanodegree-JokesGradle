@@ -1,5 +1,6 @@
 package br.com.felipeacerbi.jokesgradle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import br.com.felipeacerbi.jokesdisplaylib.ShowJokeActivity;
 import br.com.felipeacerbi.jokeslib.Joker;
 
 
@@ -51,6 +53,9 @@ public class MainActivityFragment extends Fragment {
         Joker joker = new Joker();
         String joke = joker.getJoke();
 
-        Toast.makeText(getActivity(), joke, Toast.LENGTH_SHORT).show();
+        Intent jokeIntent = new Intent(getActivity(), ShowJokeActivity.class);
+        jokeIntent.putExtra(ShowJokeActivity.JOKE_EXTRA, joke);
+
+        startActivity(jokeIntent);
     }
 }
