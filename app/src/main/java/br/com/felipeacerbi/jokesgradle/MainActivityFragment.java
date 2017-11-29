@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -47,16 +48,34 @@ public class MainActivityFragment extends Fragment implements JokesListener {
         return root;
     }
 
-    private void requestJoke() {
-        new EndpointsAsyncTask().execute(this);
+    public void requestJoke() {
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.incrementIdlingResource();
+        }
+
+        new EndpointsAsyncTask(this).execute();
     }
 
     @Override
     public void displayJoke(String joke) {
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.decrementIdlingResource();
+        }
 
         Intent jokeIntent = new Intent(getActivity(), ShowJokeActivity.class);
         jokeIntent.putExtra(ShowJokeActivity.JOKE_EXTRA, joke);
 
         startActivity(jokeIntent);
+    }
+
+    @Override
+    public FrameLayout getProgressBar() {
+        if(getView() != null) {
+            return getView().findViewById(R.id.progress_bar);
+        } else {
+            return null;
+        }
     }
 }

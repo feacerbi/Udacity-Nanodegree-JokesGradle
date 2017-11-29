@@ -1,6 +1,8 @@
 package br.com.felipeacerbi.jokesgradle;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -8,13 +10,26 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-public class EndpointsAsyncTask extends AsyncTask<JokesListener, Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
 
     private static MyApi myApiService = null;
     private JokesListener jokesListener;
 
+    public EndpointsAsyncTask(@NonNull JokesListener jokesListener) {
+        this.jokesListener = jokesListener;
+    }
+
     @Override
-    protected String doInBackground(JokesListener... params) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        if(jokesListener.getProgressBar() != null) {
+            jokesListener.getProgressBar().setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
 //                    new AndroidJsonFactory(), null)
@@ -35,8 +50,6 @@ public class EndpointsAsyncTask extends AsyncTask<JokesListener, Void, String> {
             myApiService = builder.build();
         }
 
-        jokesListener = params[0];
-
         try {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
@@ -46,6 +59,10 @@ public class EndpointsAsyncTask extends AsyncTask<JokesListener, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        if(jokesListener.getProgressBar() != null) {
+            jokesListener.getProgressBar().setVisibility(View.GONE);
+        }
+
         jokesListener.displayJoke(result);
     }
 

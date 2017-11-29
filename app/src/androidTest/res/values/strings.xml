@@ -1,0 +1,4 @@
+<resources>
+    <!-- Fix: https://stackoverflow.com/questions/21693281/gradle-assemble-of-an-android-project-failed-cant-find-r-txt-->
+    <string name="app_name">JokesGradle</string>
+</resources>

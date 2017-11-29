@@ -1,11 +1,19 @@
 package br.com.felipeacerbi.jokesgradle;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TEST_RECIPES_IDLING_RESOURCE = "idling";
+
+    @Nullable
+    private CountingIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +42,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @VisibleForTesting
+    public CountingIdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new CountingIdlingResource(TEST_RECIPES_IDLING_RESOURCE);
+        }
+        return mIdlingResource;
+    }
+
+    public void incrementIdlingResource() {
+        getIdlingResource().increment();
+    }
+
+    public void decrementIdlingResource() {
+        getIdlingResource().decrement();
     }
 }
