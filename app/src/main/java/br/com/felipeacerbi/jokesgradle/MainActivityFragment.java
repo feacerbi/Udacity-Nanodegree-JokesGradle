@@ -8,19 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import br.com.felipeacerbi.jokesdisplaylib.ShowJokeActivity;
-import br.com.felipeacerbi.jokeslib.Joker;
 
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements JokesListener {
 
     public MainActivityFragment() {
     }
@@ -34,7 +32,7 @@ public class MainActivityFragment extends Fragment {
         jokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tellJoke();
+                requestJoke();
             }
         });
 
@@ -49,9 +47,12 @@ public class MainActivityFragment extends Fragment {
         return root;
     }
 
-    public void tellJoke() {
-        Joker joker = new Joker();
-        String joke = joker.getJoke();
+    private void requestJoke() {
+        new EndpointsAsyncTask().execute(this);
+    }
+
+    @Override
+    public void displayJoke(String joke) {
 
         Intent jokeIntent = new Intent(getActivity(), ShowJokeActivity.class);
         jokeIntent.putExtra(ShowJokeActivity.JOKE_EXTRA, joke);
