@@ -19,9 +19,9 @@ import br.com.felipeacerbi.jokesdisplaylib.ShowJokeActivity;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragmentFree extends Fragment implements JokesListener {
+public class MainActivityFragment extends Fragment implements JokesListener {
 
-    public MainActivityFragmentFree() {
+    public MainActivityFragment() {
     }
 
     @Override
