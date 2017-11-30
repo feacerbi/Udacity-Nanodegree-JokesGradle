@@ -15,7 +15,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
     private JokesListener jokesListener;
 
-    public EndpointsAsyncTask(@NonNull JokesListener jokesListener) {
+    EndpointsAsyncTask(@NonNull JokesListener jokesListener) {
         this.jokesListener = jokesListener;
     }
 

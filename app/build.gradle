@@ -23,6 +23,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        free {
+            applicationId "br.com.felipeacerbi.jokesgradle.free"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+        paid {
+            applicationId "br.com.felipeacerbi.jokesgradle.paid"
+            applicationIdSuffix ".paid"
+            versionNameSuffix "-paid"
+        }
+    }
 }
 
 dependencies {
@@ -40,7 +53,7 @@ dependencies {
     compile 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
 
     // Play Services
-    compile 'com.google.android.gms:play-services-ads:11.6.2'
+    freeCompile 'com.google.android.gms:play-services-ads:11.6.2'
 
     compile project(':jokesdisplaylib')
     compile project(path: ':backend', configuration: 'android-endpoints')
